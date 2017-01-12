@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REST Api | SpagoBI Web Integration</title>
+</head>
+<body>
+<h5>By SpagoBI SDK REST Api</h5>
+<button onclick="getDocuments()">Generate Documents Text</button>
+<textarea id="listOfDocumentText" readonly style="width: 100%; height: 200px;"></textarea>
+<button onclick="getDocumentUI()">Generate Document UI</button>
+<textarea id="listOfDocumentUIText" readonly style="width: 100%; height: 200px;"></textarea>
+<button onclick="getDocumentUIPreview()">Generate Document UI Preview</button>
+<script>
+    getDocuments = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://localhost:8080/SpagoBI/restful-services/2.0/documents');
+        request.setRequestHeader("authorization", "Basic YmlhZG1pbjpiaWFkbWlu");
+
+        request.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log('Status:', this.status);
+                console.log('Headers:', this.getAllResponseHeaders());
+                console.log('Body:', this.responseText);
+                var jsonArray = JSON.parse(this.responseText);
+                console.log("DocumentsCount=" + jsonArray.length);
+                document.getElementById("listOfDocumentText").textContent = this.responseText;
+            }
+        };
+        request.send();
+    }
+
+    getDocumentUI = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://localhost:8080/SpagoBI/restful-services/2.0/documents/DOC_DEMO_OLAP1');
+        request.setRequestHeader("authorization", "Basic YmlhZG1pbjpiaWFkbWlu");
+
+        request.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log('Status:', this.status);
+                console.log('Headers:', this.getAllResponseHeaders());
+                console.log('Body:', this.responseText);
+                document.getElementById("listOfDocumentUIText").textContent = this.responseText;
+            }
+        };
+        request.send();
+    }
+
+    getDocumentUIPreview = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://localhost:8080/SpagoBI/restful-services/2.0/documents/DOC_DEMO_OLAP1/preview');
+        request.setRequestHeader("authorization", "Basic YmlhZG1pbjpiaWFkbWlu");
+
+        request.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log('Status:', this.status);
+                console.log('Headers:', this.getAllResponseHeaders());
+                console.log('Body:', this.responseText);
+            }
+        };
+        request.send();
+    }
+</script>
+
+
+</body>
+</html>

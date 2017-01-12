@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cors | SpagoBI Web Integration</title>
+    <script type="text/javascript" src="js/sbisdk-all-production.js"></script>
+</head>
+<body>
+<h5>By SpagoBI SDK Cors</h5>
+<div height="700px" width="100%" id='results'></div>
+
+<script type="text/javascript">
+
+    Sbi.sdk.services.setBaseUrl({
+        protocol: 'http'
+        , host: 'localhost'
+        , port: '8080'
+        , contextPath: 'SpagoBI'
+        , controllerPath: 'servlet/AdapterHTTP'
+    });
+
+    doLogin = function () {
+        var user = "biadmin";
+        var password = "biadmin";
+
+        injectDocument();
+
+    }
+
+    injectDocument = function () {
+        Sbi.sdk.cors.api.executeDataSet({
+            datasetLabel: 'DS_DEMO_EXTCHART'
+            , parameters: {
+                par_year: 1998,
+                par_family: 'Food'
+            }
+            , callbackOk: function (obj) {
+                var str = "<th>Id</th>";
+
+                var fields = obj.metaData.fields;
+                for (var fieldIndex in fields) {
+                    if (fields[fieldIndex].hasOwnProperty('header'))
+                        str += '<th>' + fields[fieldIndex]['header'] + '</th>';
+                }
+
+                str += '<tbody>';
+
+                var rows = obj.rows;
+                for (var rowIndex in rows) {
+                    str += '<tr>';
+                    for (var colIndex in rows[rowIndex]) {
+                        str += '<td>' + rows[rowIndex][colIndex] + '</td>';
+                    }
+                    str += '</tr>';
+                }
+
+                str += '</tbody>';
+
+                document.getElementById('results').innerHTML = str;
+            }
+        });
+    }
+
+
+</script>
+
+<script type="text/javascript">
+    doLogin();
+</script>
+</body>
+</html>

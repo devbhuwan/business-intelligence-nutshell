@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jsonp | SpagoBI Web Integration</title>
+    <script type="text/javascript" src="js/sbisdk-all-production.js"></script>
+</head>
+<body>
+
+<h5>By SpagoBI SDK Jsonp</h5>
+
+<div height="700px" width="100%" id='jsonpId'></div>
+
+<script type="text/javascript">
+    /*
+     *  setup some basic informations in order to invoke SpagoBI server's services
+     */
+    Sbi.sdk.services.setBaseUrl({
+        protocol: 'http'
+        , host: 'localhost'
+        , port: '8080'
+        , contextPath: 'SpagoBI'
+        , controllerPath: 'servlet/AdapterHTTP'
+    });
+
+
+    /*
+     *  This is the timeout to be considered in case the call fails and the error handler is invoked.
+     *  Default values is 30 seconds!!! That's why we need to set it to an reasonable value.
+     *  If it is set to 0 ms, an error occurs.
+     *  TODO: investigate why it cannot be set to 0
+     */
+    Sbi.sdk.jsonp.timeout = 5000;
+
+    doLogin = function() {
+        var user = "biadmin";
+        var password = "biadmin";
+
+        /*
+         * the callback invoked uppon request termination
+         *
+         * @param result the server response
+         * @param args parameters sent to the server with the original request
+         * @param seccess true if the service has been executed by the server in a succesfull way
+         */
+        var cb = function(result, args, success) {
+
+            if(success === true) {
+                injectDocument();
+            } else {
+                alert('ERROR: Wrong username or password');
+            }
+        };
+
+        /*
+         * authentication function
+         *
+         * @param params the list of parameters to pass to the authentication servics (i.e. user & password)
+         * @param callback the callback definition (i.e. fn: the function to call; scope: the scope of invocation;
+         *        args: parameters to append to the callback invocation)
+         */
+        Sbi.sdk.api.authenticate({
+            params: {
+                user: user
+                , password: password
+            }
+
+            , callback: {
+                fn: cb
+                , scope: this
+                //, args: {arg1: 'A', arg2: 'B', ...}
+            }
+        });
+    }
+
+    injectDocument = function () {
+        var html = Sbi.sdk.api.getDocumentHtml({
+            documentLabel: 'cockpit__120212978'
+            , displayToolbar: true
+            , displaySliders: true
+            , iframe: {
+                height: '500px'
+                , width: '100%'
+                , style: 'border: 0px;'
+            }
+        });
+        document.getElementById("jsonpId").innerHTML = html;
+    }
+
+
+</script>
+
+<script type="text/javascript">
+    doLogin();
+</script>
+
+</body>
+</html>
