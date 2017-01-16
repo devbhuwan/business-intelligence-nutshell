@@ -1,4 +1,4 @@
-package io.github.devbhuwan;
+package io.github.devbhuwan.jboss.dashbuilder.integration;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package io.github.devbhuwan;
+package io.github.devbhuwan.jboss.dashbuilder.integration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="resources/dashbuilder-js-api/dashbuilder-1.0.0.js"></script>
+    <title>JS API | Dashbuilder</title>
+</head>
+<body onload="embedCharts();">
+<h1>KPIs in Web Application</h1>
+
+<!-- Very simple layout with charts -->
+<table border="0" cellpadding="5" >
+    <tr>
+        <td id="chart1"></td>
+        <td id="chart2"></td>
+    </tr>
+    <tr>
+        <td id="chart3"></td>
+        <td id="chart4"></td>
+    </tr>
+</table>
+<!-- End of charts -->
+
+
+
+<a href="#" onclick="embedCharts(); return false;">RESET</a>
+
+
+
+<script type="text/javascript">
+
+    function embedCharts() {
+
+        var dashbuilderUrl = 'http://192.168.99.100:8080/dashbuilder';
+
+        dashbuilder_embed_chart('chart1', dashbuilderUrl, 'kpi_30301353506280659', 600, 350);
+
+        dashbuilder_embed_chart('chart2', dashbuilderUrl, 'kpi_30041353504912610', 600, 350);
+
+        dashbuilder_embed_chart('chart3', dashbuilderUrl, 'kpi_30441353507392054', 600, 350);
+
+        dashbuilder_embed_chart('chart4', dashbuilderUrl, 'kpi_30251353675275870', 600, 350);
+
+    }
+
+</script>
+
+</body>
+</html>
