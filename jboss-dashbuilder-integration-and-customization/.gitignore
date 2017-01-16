@@ -1,0 +1,30 @@
+#Bytecode
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+#mvn target folder
+**/target/
+
+#gradle
+**/build/
+**/.gradle/
+
+#eclipse project files
+**/.settings/
+**/.project
+**/.classpath
+
+#netbeans project files
+**/nbproject/
+**/nb-configuration.xml
+
+#idea project files
+**/.idea/
+*.iml
